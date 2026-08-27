@@ -6,7 +6,7 @@ import { Resend } from "resend";
 import {
   APPLICATION_SOURCES,
   PIPELINE_STAGES,
-  type ApplicationRow,
+  mapApplicationRow,
   type ApplicationSource,
   type PipelineStage,
 } from "@/lib/applications";
@@ -98,7 +98,7 @@ export async function sendInterviewInvite(
     return { error: error?.message ?? "Application not found." };
   }
 
-  const application = data as ApplicationRow;
+  const application = mapApplicationRow(data);
   const email = application.candidates?.email?.trim();
   const name = application.candidates?.name?.trim() || "there";
   const jobTitle = application.jobs?.title?.trim() || "the open role";

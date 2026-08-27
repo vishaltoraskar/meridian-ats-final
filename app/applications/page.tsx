@@ -1,7 +1,7 @@
 import { ApplicationForm } from "@/app/applications/application-form";
 import { SendInterviewInviteButton } from "@/app/applications/send-interview-invite-button";
 import { AppHeader } from "@/components/app-header";
-import { type ApplicationRow } from "@/lib/applications";
+import { type ApplicationRow, mapApplicationRow } from "@/lib/applications";
 import { createSupabaseClient } from "@/lib/supabase";
 
 export default async function ApplicationsPage() {
@@ -32,7 +32,9 @@ export default async function ApplicationsPage() {
     label: [candidate.name, candidate.phone].filter(Boolean).join(" · "),
   }));
 
-  const applications = (applicationsResult.data ?? []) as ApplicationRow[];
+  const applications: ApplicationRow[] = (applicationsResult.data ?? []).map(
+    mapApplicationRow,
+  );
   const loadError =
     jobsResult.error?.message ||
     candidatesResult.error?.message ||
